@@ -56,9 +56,8 @@ def guessWord(word):
             bestscore = currscore
             bestword = z
 
-
+    guesses += 1
     while bestword != word:
-        guesses += 1
         wordlist = newwordlist
         looplist = []
         letterdict = {}
