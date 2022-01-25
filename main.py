@@ -5,7 +5,7 @@ for line in f for word in line.split())
 
 
 def guessWord(word):
-    first_guess = "salet"
+    first_guess = "stale"
     letterdict = {}
     strlist = ""
     bestscore = 0
@@ -110,7 +110,7 @@ def guessWord(word):
         guesses += 1
     return guesses
 
-def simulation():
+def main():
     count = 0
     g1 = 0
     g2 = 0
@@ -151,4 +151,4 @@ def simulation():
 
     print('1 -> ' + str(g1) + "\n" + '2 -> ' + str(g2) + "\n" + '3 -> ' + str(g3) + "\n" + '4 -> ' + str(g4) + "\n" + '5 -> ' + str(g5) + "\n" + '6 -> ' + str(g6) + "\n" + '7 -> ' + str(g7) + "\n" + '8 -> ' + str(g8) + "\n" + '9 -> ' + str(g9) + "\n" + '10 -> ' + str(g10) + "\n" + "avg -> " + str(total/count))
 
-simulation()
+main()
