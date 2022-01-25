@@ -2,36 +2,44 @@ with open("wordlist.txt", "r") as f:
     wordlist = sorted(word.strip(",")
 for line in f for word in line.split())
 
+copy = wordlist[:]
+smalllist = copy[:2310]
+
 def guessWord(word):
     first_guess = "salet"
     letterdict = {}
-    final = "01234"
     strlist = ""
     bestscore = 0
     bestword = ""
     guesses = 1
-
-
+    newwordlist = []
 
     for x in range(5):
         if first_guess[x] == word[x]:
-            final = final.replace(str(x), first_guess[x])
-            for item in wordlist:
-                if first_guess[x] != item[x]:
-                    wordlist.remove(item)
+            for i in range(len(wordlist)):
+                item = wordlist[i]
+                if len(item) > 1 and first_guess[x] != item[x]:
+                    wordlist[i] = "0"
         elif first_guess[x] in word:
-            for item in wordlist:
-                if first_guess[x] == item[x]:
-                    wordlist.remove(item)
-            for item in wordlist:
-                if first_guess[x] not in item:
-                    wordlist.remove(item)
+            for i in range(len(wordlist)):
+                item = wordlist[i]
+                if len(item) > 1 and first_guess[x] == item[x]:
+                    wordlist[i] = "0"
+            for i in range(len(wordlist)):
+                item = wordlist[i]
+                if len(item) > 1 and first_guess[x] not in item:
+                    wordlist[i] = "0"
         else:
-            for item in wordlist:
-                if first_guess[x] in item:
-                    wordlist.remove(item)
+            for i in range(len(wordlist)):
+                item = wordlist[i]
+                if len(item) > 1 and first_guess[x] in item:
+                    wordlist[i] = "0"
 
     for i in wordlist:
+        if i != "0":
+            newwordlist.append(i)
+
+    for i in newwordlist:
         strlist = strlist + i
     for item in strlist:
         if item in letterdict:
@@ -39,7 +47,7 @@ def guessWord(word):
         else:
             letterdict[item] = 1
 
-    for z in wordlist:
+    for z in newwordlist:
         currword = list(z)
         currscore = 0
         for y in currword:
@@ -49,28 +57,42 @@ def guessWord(word):
             bestword = z
 
 
-    while final != word:
+    while bestword != word:
+        guesses += 1
+        wordlist = newwordlist
+        looplist = []
         letterdict = {}
         strlist = ""
         currguess = bestword
         for x in range(5):
             if currguess[x] == word[x]:
-                final = final.replace(str(x), currguess[x])
-                for item in wordlist:
-                    if first_guess[x] != item[x]:
-                        wordlist.remove(item)
+                for i in range(len(wordlist)):
+                    item = wordlist[i]
+                    if len(item) > 1 and currguess[x] != item[x]:
+                        wordlist[i] = "0"
             elif currguess[x] in word:
-                for item in wordlist:
-                    if currguess[x] == item[x]:
-                        wordlist.remove(item)
-                for item in wordlist:
-                    if currguess[x] not in item:
-                        wordlist.remove(item)
+                for i in range(len(wordlist)):
+                    item = wordlist[i]
+                    if len(item) > 1 and currguess[x] == item[x]:
+                        wordlist[i] = "0"
+                for i in range(len(wordlist)):
+                    item = wordlist[i]
+                    if len(item) > 1 and currguess[x] not in item:
+                        wordlist[i] = "0"
+            else:
+                for i in range(len(wordlist)):
+                    item = wordlist[i]
+                    if len(item) > 1 and currguess[x] in item:
+                        wordlist[i] = "0"
+
+        for i in wordlist:
+            if i != "0":
+                looplist.append(i)
 
         bestscore = 0
         bestword = ""
 
-        for i in wordlist:
+        for i in looplist:
             strlist = strlist + i
         for item in strlist:
             if item in letterdict:
@@ -78,7 +100,7 @@ def guessWord(word):
             else:
                 letterdict[item] = 1
 
-        for z in wordlist:
+        for z in looplist:
             currword = list(z)
             currscore = 0
             for y in currword:
@@ -87,9 +109,47 @@ def guessWord(word):
                 bestscore = currscore
                 bestword = z
         guesses += 1
+    return guesses
 
-    print(final)
-    print(guesses)
+def simulation():
+    count = 0
+    g1 = 0
+    g2 = 0
+    g3 = 0
+    g4 = 0
+    g5 = 0
+    g6 = 0
+    g7 = 0
+    g8 = 0
+    g9 = 0
+    g10 = 0
+    total = 0
+    for i in smalllist:
+        simguess = guessWord(i)
+        total += simguess
+        count += 1
+        if simguess == 1:
+            g1 += 1
+        elif simguess == 2:
+            g2 += 1
+        elif simguess == 3:
+            g3 += 1
+        elif simguess == 4:
+            g4 += 1
+        elif simguess == 5:
+            g5 += 1
+        elif simguess == 6:
+            g6 += 1
+        elif simguess == 7:
+            g7 += 1
+        elif simguess == 8:
+            g8 += 1
+        elif simguess == 9:
+            g9 += 1
+        elif simguess == 10:
+            g10 += 1
 
 
-guessWord("store")
+    print('1 -> ' + g1 + "\n" + '2 -> ' + g2 + "\n" + '3 -> ' + g3 + "\n" + '4 -> ' + g4 + "\n" + '5 -> ' + g5 + "\n" + '6 -> ' + g6 + "\n" + '7 -> ' + g7 + "\n" + '8 -> ' + g8 + "\n" + '9 -> ' + g9 + "\n" + '10 -> ' + g10 + "\n" + "avg -> " + total/count)
+
+simulation()
