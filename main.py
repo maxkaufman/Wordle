@@ -2,7 +2,7 @@ with open("wordlist.txt", "r") as f:
     wordlist = sorted(word.strip(",")
 for line in f for word in line.split())
 
-copy = wordlist[:]
+copy = [word for word in wordlist]
 smalllist = copy[:2310]
 
 def guessWord(word):
@@ -12,6 +12,7 @@ def guessWord(word):
     bestscore = 0
     bestword = ""
     guesses = 1
+    wordlist = copy
     newwordlist = []
 
     for x in range(5):
