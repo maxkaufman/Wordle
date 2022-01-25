@@ -1,9 +1,8 @@
 with open("wordlist.txt", "r") as f:
-    wordlist = sorted(word.strip(",")
+    copy = sorted(word.strip(",")
 for line in f for word in line.split())
 
-copy = [word for word in wordlist]
-smalllist = copy[:2310]
+
 
 def guessWord(word):
     first_guess = "salet"
@@ -12,7 +11,7 @@ def guessWord(word):
     bestscore = 0
     bestword = ""
     guesses = 1
-    wordlist = copy
+    wordlist = copy.copy()
     newwordlist = []
 
     for x in range(5):
@@ -125,7 +124,7 @@ def simulation():
     g9 = 0
     g10 = 0
     total = 0
-    for i in smalllist:
+    for i in copy:
         simguess = guessWord(i)
         total += simguess
         count += 1
@@ -151,6 +150,6 @@ def simulation():
             g10 += 1
 
 
-    print('1 -> ' + g1 + "\n" + '2 -> ' + g2 + "\n" + '3 -> ' + g3 + "\n" + '4 -> ' + g4 + "\n" + '5 -> ' + g5 + "\n" + '6 -> ' + g6 + "\n" + '7 -> ' + g7 + "\n" + '8 -> ' + g8 + "\n" + '9 -> ' + g9 + "\n" + '10 -> ' + g10 + "\n" + "avg -> " + total/count)
+    print('1 -> ' + str(g1) + "\n" + '2 -> ' + str(g2) + "\n" + '3 -> ' + str(g3) + "\n" + '4 -> ' + str(g4) + "\n" + '5 -> ' + str(g5) + "\n" + '6 -> ' + str(g6) + "\n" + '7 -> ' + str(g7) + "\n" + '8 -> ' + str(g8) + "\n" + '9 -> ' + str(g9) + "\n" + '10 -> ' + str(g10) + "\n" + "avg -> " + str(total/count))
 
 simulation()
